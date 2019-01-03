@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\UserRecord;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 
@@ -18,6 +19,20 @@ class UserRecordController extends Controller
     }
     public function showRecord() {
         $user = $this->user;
-        return view('userRecords')->with('user', $user);
+        $this->calculateAverage();
+        //return view('userRecords')->with('user', $user);
+    }
+    public function calculateAverage() {
+        $user = $this->user;
+        $records = UserRecord::where(['userId' => $user->id, 'testId' => 1]);
+        $number = $records->count();
+        $total = 0;
+        foreach ($records->cursor() as $record) {
+            $total = $total + $record->score;
+        }
+        $averageScore = $total/$number;
+        echo $averageScore;
+
+
     }
 }
