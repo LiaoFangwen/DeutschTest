@@ -16,8 +16,8 @@ class UserSeeder extends Seeder
         for ($i=0; $i < 50; $i++) {
             \App\User::create([
                 'name' => 'User'.$i,
-                'email' => $i.'@th.de',
-                'password' => '12345678'
+                'email' => 'Liao'.$i.'@th.de',
+                'password' => bcrypt('12345678')
             ]);
         }
     }

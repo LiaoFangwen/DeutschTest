@@ -13,7 +13,7 @@ class TestSeeder extends Seeder
     {
         DB::table('tests')->delete();
 
-        for ($i=0; $i < 10; $i++) {
+        for ($i=1; $i < 11; $i++) {
             \App\Test::create([
                 'testName' => 'Test'.$i,
                 'averageScore' => 0,

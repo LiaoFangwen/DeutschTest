@@ -66,6 +66,9 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('\userRecord') }}">{{ __('Record') }}</a>
+                            </li>
                         @endguest
                     </ul>
                 </div>
