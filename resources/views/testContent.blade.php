@@ -2,29 +2,27 @@
 
 @section('content')
 <div id="title" style="text-align: center;">
-    <h1>Test Content</h1>
-    <div style="padding: 5px; font-size: 16px;">Test Catalog</div>
+    <h1>{{ 'Test'.$testId }}</h1>
 </div>
 <hr>
-<div id="content">
+<div id="content" style="text-align: center;">
     <form action="{{url('/test/testResult/'.$testId)}}" method="post">
         {!! csrf_field() !!}
-    <ul>
-        @foreach (\App\Question::where('testId', $testId)->cursor() as $question)
-            <li style="margin: 50px 0;">
-                <div>
-                    <h4>{{$question->questionContent}}</h4>
-                    <div>
+            <table class="table table-striped" style="width:700px;margin-left:auto;margin-right:auto">
+                @foreach (\App\Question::where('testId', $testId)->cursor() as $question)
+                    <tr><td colspan="4" ><h4>{{$question->questionContent}}</h4></td></tr>
+                    <tr>
                         @foreach (\App\QuestionOption::where('questionId', $question->id)->cursor() as $questionOption)
-                            <input class="uncorrectedAnswer" type="radio" name="input{{($question->id)%10}}"
-                                   value="{{$questionOption->optionContent}}">{{$questionOption->optionContent}}
+                        <td><input class="uncorrectedAnswer" type="radio" name="input{{($question->id)%10}}"
+                               value="{{$questionOption->optionContent}}">{{$questionOption->optionContent}}
+                        </td>
                         @endforeach
-                    </div>
-                </div>
-            </li>
-        @endforeach
-    </ul>
-        <input type="submit" value="Show Result">
+                    </tr>
+                @endforeach
+            </table>
+
+        <br/>
+        <input type="submit" class="btn btn-default" value="Show Result">
     </form>
 </div>
 @endsection

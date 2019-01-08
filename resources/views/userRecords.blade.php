@@ -1,19 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Record</h1>
-<h3>User{{$user->id-1}}</h3>
-    <div>
-        @for($i = 1; $i<11; $i++)
-            <h4>Test{{$i}}</h4>
-            @foreach (\App\UserRecord::where(['userId' => $user->id, 'testId' => $i])->cursor() as $record)
-                <li style="margin: 50px 0;">
-                    <div>
-                        <h5>{{$record->attemptNumber}}</h5>
-                        <h5>{{$record->score}}</h5>
-                    </div>
-                </li>
-            @endforeach
-        @endfor
+<div id="title" style="text-align: center;">
+    <h1>History Record</h1>
+</div>
+<hr>
+    <div style="width:1140px;margin-left:auto;margin-right:auto">
+        <div style="width:368px;margin-left:auto;margin-right:auto">
+        <table class="table">
+            <tr>
+                <th>Test Name</th>
+                <th>Attempt</th>
+                <th>Score</th>
+            </tr>
+            @foreach (\App\UserRecord::where(['userId' => $user->id])->cursor() as $record)
+                <tr>
+                    <td>{{'Test'.$record->testId}}</td>
+                    <td>{{$record->attemptNumber}}</td>
+                    <td>{{$record->score}}</td>
+                </tr>
+             @endforeach
+        </table>
+        </div>
     </div>
 @endsection
