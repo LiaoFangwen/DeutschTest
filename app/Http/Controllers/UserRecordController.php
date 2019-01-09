@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth;
 class UserRecordController extends Controller
 {
     protected $user;
+    private $averageScore;
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
@@ -19,8 +20,8 @@ class UserRecordController extends Controller
     }
     public function showRecord() {
         $user = $this->user;
-        $this->calculateAverage();
-        //return view('userRecords')->with('user', $user);
+
+        return view('userRecords',['user'=>$user,'averageScore'=>$this->calculateAverage()]);
     }
     public function calculateAverage() {
         $user = $this->user;
@@ -31,8 +32,6 @@ class UserRecordController extends Controller
             $total = $total + $record->score;
         }
         $averageScore = $total/$number;
-        echo $averageScore;
-
-
+        return $averageScore;
     }
 }
