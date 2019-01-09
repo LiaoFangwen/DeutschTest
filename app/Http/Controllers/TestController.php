@@ -14,6 +14,7 @@ class TestController extends Controller
 {
     private static $timeStart;
     private static $timeEnd;
+    private $averageScore;
     public function __construct()
     {
         $this->middleware('auth');
@@ -35,29 +36,20 @@ class TestController extends Controller
         $correctAnswers = Question::where('testId', $testId);
         $results = array();
         $score = 0;
-        $i = 0;
+        $j = 1;
         foreach ($correctAnswers->cursor() as $correctAnswer) {
-            $j = $i/3+1;
-            if($j==10)
-                $unknownAnswer = $request->get('input0');
-            else
-                $unknownAnswer = $request->get('input' . $j);
+            $unknownAnswer = $request->get('input' . $j);
             if ($correctAnswer->answer == $unknownAnswer) {
-                $results[$i] = 'right';
+                $checkAnswer = 'Right';
                 $score++;
-            } else
-                $results[$i] = 'wrong';
-            $results[$i+1] = $correctAnswer->answer;
-            $results[$i+2] = $unknownAnswer;
-            $i = $i+3;
+            } else {
+                $checkAnswer = 'Wrong';
+            }
+            $result = array($j,$unknownAnswer,$correctAnswer->answer,$checkAnswer);
+            array_push($results,$result);
+            $j++;
         }
-        $results[30] = $score;
-        $results[31] = $testId;
-        $results[32] = self::$timeStart;
-        $this->createUserRecord($score, $testId);
-        $this->updateTest($testId);
-
-        return view('testResult')->with('results', $results);
+        return view('testResult',['results'=>$results,'score'=>$score]);
     }
     private function createUserRecord($score, $testId) {
         $user = Auth::user();
@@ -81,7 +73,7 @@ class TestController extends Controller
         $test->averageScore = $averageScore;
         $test->peopleCounting = $peopleCounting;
         $test->save();
-
+        $this->averageScore = $averageScore;
     }
     private function calculateTime($timeStart, $timeEnd) {
         $date=floor((strtotime($timeEnd)-strtotime($timeStart))/86400);

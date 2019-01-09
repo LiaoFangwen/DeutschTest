@@ -14,24 +14,29 @@ class UserRecordController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $this->user = $request->user();
-
             return $next($request);
         });
     }
     public function showRecord() {
         $user = $this->user;
 
-        return view('userRecords',['user'=>$user,'averageScore'=>$this->calculateAverage()]);
-    }
-    public function calculateAverage() {
-        $user = $this->user;
-        $records = UserRecord::where(['userId' => $user->id, 'testId' => 1]);
-        $number = $records->count();
-        $total = 0;
-        foreach ($records->cursor() as $record) {
-            $total = $total + $record->score;
+        $averageScores = array();
+        $recordsList = array();
+        for($i=1;$i<=10;$i++) {
+            $totalScore=0;
+            $records = UserRecord::whereRaw('userId = ? and testId = ? order by updated_at desc',[$user->id,$i]);
+            $number = 1;
+            foreach($records->cursor() as $record){
+                if($number<=5){
+                    $totalScore = $totalScore + $record->score;
+                    $number ++;
+                    array_push($recordsList,['testId'=>$i,'attemptNumber'=>$record->attemptNumber,'score'=>$record->score]);
+                }
+            }
+            $averageScore = $totalScore/$number;
+            $averageScores['test'.$i] = $averageScore;
+
         }
-        $averageScore = $total/$number;
-        return $averageScore;
+        return view('userRecords',['recordsList'=>$recordsList,'averageScores'=>$averageScores]);
     }
 }
