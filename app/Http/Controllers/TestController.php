@@ -38,7 +38,11 @@ class TestController extends Controller
         $score = 0;
         $j = 1;
         foreach ($correctAnswers->cursor() as $correctAnswer) {
-            $unknownAnswer = $request->get('input' . $j);
+            if($j == 10)
+                $unknownAnswer = $request->get('input0');
+            else
+                $unknownAnswer = $request->get('input' . $j);
+
             if ($correctAnswer->answer == $unknownAnswer) {
                 $checkAnswer = 'Right';
                 $score++;
