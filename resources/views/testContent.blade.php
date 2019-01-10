@@ -7,7 +7,7 @@
 <hr>
 <div id="content" style="text-align: center;">
     Time：<span id="timer"></span>
-    
+
     <form action="{{url('/test/testResult/'.$testId)}}" method="post">
         {!! csrf_field() !!}
             <table class="table table-striped" style="width:700px;margin-left:auto;margin-right:auto">
@@ -39,7 +39,7 @@
     }
     function clock(){
         // s: whole needed seconds
-        this.s=140;
+        this.s=10;
         this.move=function(){
             document.getElementById("timer").innerHTML=exchange(this.s);
             this.s=this.s-1;
@@ -47,7 +47,6 @@
             // if time is out, then stopping calling move()
             if(this.s<0){
                 alert("Time is out");
-                document.getElementById("go").disabled=true;
                 clearTimeout(timer);
             }
         }
