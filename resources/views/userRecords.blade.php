@@ -24,7 +24,7 @@
                             <td>{{$recordsList[$i]['attemptNumber']}}</td>
                             <td>{{$recordsList[$i]['score']}}</td>
                             <td rowspan="5" style="text-align: center">{{$averageScores['test'.$recordsList[$i]['testId']]}}</td>
-                            <td rowspan="5" style="text-align: center">test</td>
+                            <td rowspan="5" style="text-align: center">{{$testAverageScores[$recordsList[$i]['testId']]}}</td>
                         </tr>
                     @else
                         <tr>
