@@ -33,10 +33,12 @@ class UserRecordController extends Controller
                     array_push($recordsList,['testId'=>$i,'attemptNumber'=>$record->attemptNumber,'score'=>$record->score]);
                 }
             }
-            $averageScore = $totalScore/$number;
+            $averageScore = round($totalScore/$number,2);
+
             $averageScores['test'.$i] = $averageScore;
 
         }
         return view('userRecords',['recordsList'=>$recordsList,'averageScores'=>$averageScores]);
+
     }
 }
