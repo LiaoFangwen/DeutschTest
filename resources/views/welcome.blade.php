@@ -8,18 +8,23 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600| Source+Serif+Pro:700" rel="stylesheet" type="text/css">
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles -->
     <style>
-        html, body {
+        html, body{
             background-color: #fff;
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
-            height: 100vh;
+            height: 90vh;
             margin: 0;
         }
-
+        footer{
+            background-color: #fff;
+            color: #636b6f;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 200;
+            margin-bottom: 5px;
+        }
         .full-height {
             height: 100vh;
         }
@@ -80,11 +85,15 @@
             <div class="top-right links">
                 @auth
                     <a href="{{ url('/home') }}">My Home</a>
-                    | <a class="dropdown-item" href="{{ route('logout') }}"
+                    | <a href="{{ route('logout') }}"
                          onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                               document.getElementById('logout-form').submit();">
                         {{ __('Logout') }}
                     </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 @else
                     <a href="{{ route('login') }}">Login</a>
 
@@ -100,10 +109,9 @@
 <div>
     <!-- Footer -->
     <footer class="footer">
-        <div class="container text-center">
+        <div style="text-align:center;font-size:12px;">
         <p>
-            <strong>© 2019 Copyright:
-                <a href="https://www.th-luebeck.de/"> Technishe Hochschule Luebeck</a></strong>
+            <strong>© 2019 Copyright: Fangwen Liao | Xinyue Shi | Yun Hua </strong>
         </p>
         </div>
     </footer>
