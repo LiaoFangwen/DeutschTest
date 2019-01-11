@@ -6,6 +6,8 @@
 </div>
 <hr>
 <div id="content" style="text-align: center;">
+    Time：<span id="timer"></span>
+
     <form action="{{url('/test/testResult/'.$testId)}}" method="post">
         {!! csrf_field() !!}
             <table class="table table-striped" style="width:700px;margin-left:auto;margin-right:auto;text-align:left">
@@ -36,3 +38,44 @@
     </form>
 </div>
 @endsection
+
+<script>
+    var clock=new clock();
+    var timer;
+
+    window.onload=function(){
+
+        timer=setInterval("clock.move()",1000);
+    }
+    function clock(){
+        // s: whole needed seconds
+        this.s=10;
+        this.move=function(){
+            document.getElementById("timer").innerHTML=exchange(this.s);
+            this.s=this.s-1;
+
+            // if time is out, then stopping calling move()
+            if(this.s<0){
+                alert("Time is out");
+                clearTimeout(timer);
+            }
+        }
+    }
+
+    //change seconds to minutes
+    function exchange(time){
+        this.m=Math.floor(time/60);
+        this.s=(time%60);
+        if(this.s>=10)
+            if(this.m>=10)
+                this.text=this.m+" : "+this.s;
+            else
+                this.text="0"+this.m+" : "+this.s;
+        else
+        if(this.m>=10)
+            this.text=this.m+" : 0"+this.s;
+        else
+            this.text="0"+this.m+" : 0"+this.s;
+        return this.text;
+    }
+</script>
