@@ -110,9 +110,9 @@
     <!-- Footer -->
     <footer class="footer">
         <div style="text-align:center;font-size:12px;">
-        <p>
-            <strong>© 2019 Copyright: Fangwen Liao | Xinyue Shi | Yun Hua </strong>
-        </p>
+            <p>
+                <strong>© 2019 Copyright: Fangwen Liao | Xinyue Shi | Yun Hua </strong>
+            </p>
         </div>
     </footer>
 </div>

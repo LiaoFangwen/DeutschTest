@@ -34,7 +34,7 @@ class UserRecordController extends Controller
                 }
             }
             $ts = Test::find($i);
-            $testAverageScores[$i] = $ts->averageScore;
+            $testAverageScores[$i] = round($ts->averageScore,2);
             $averageScore = round($totalScore/$number,2);
 
             $averageScores['test'.$i] = $averageScore;

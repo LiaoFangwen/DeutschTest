@@ -4,6 +4,7 @@
     <div id="title" style="text-align: center;">
         <h1>Take a Test</h1>
     </div>
+
     <hr>
     <div id="content" style="width:1140px;margin-left:auto;margin-right:auto;display:flex">
         <div id="ul1" style="width:400px;margin-left:auto;margin-right:auto;text-align:center">
@@ -36,6 +37,13 @@
                 @endif
             @endforeach
         </ul>
+
         </div>
     </div>
+        <div style = "padding-left: 400px">
+            <a href="{{ url('/home')}}">
+                <h6>Back to home</h6>
+            </a>
+        </div>
+
 @endsection

@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
-    private static $timeStart;
-    private static $timeEnd;
     private $averageScore;
     public function __construct()
     {
@@ -24,12 +22,14 @@ class TestController extends Controller
     {
         return view('testCatalog')->with('tests', \App\Test::all());
     }
+
     public function showTest(Request $request) {
         self::$timeStart = Carbon::now()->toDateTimeString();
-        echo self::$timeStart;
+        //echo self::$timeStart;
         $testId = $request->id;
         return view('testContent')->with('testId', $testId);
     }
+
     public function showResult(Request $request) {
         self::$timeEnd = Carbon::now();
         $testId = $request->id;
@@ -53,7 +53,11 @@ class TestController extends Controller
             array_push($results,$result);
             $j++;
         }
+
+        $this->createUserRecord($score,$testId);
+        $this->updateTest($testId);
         return view('testResult',['results'=>$results,'score'=>$score]);
+
     }
     private function createUserRecord($score, $testId) {
         $user = Auth::user();
@@ -77,13 +81,6 @@ class TestController extends Controller
         $test->averageScore = $averageScore;
         $test->peopleCounting = $peopleCounting;
         $test->save();
-        $this->averageScore = $averageScore;
     }
-    private function calculateTime($timeStart, $timeEnd) {
-        $date=floor((strtotime($timeEnd)-strtotime($timeStart))/86400);
-        $hour=floor((strtotime($timeEnd)-strtotime($timeStart))%86400/3600);
-        $minute=floor((strtotime($timeEnd)-strtotime($timeStart))%86400/60);
-        $second=floor((strtotime($timeEnd)-strtotime($timeStart))%86400%60);
-        return "Your test lasts".$date."day(s)".$hour."hour(s)".$minute."minute(s)".$second."second(s)";
-    }
+
 }

@@ -6,7 +6,11 @@
     <div id="title" style="text-align: center;">
         <h1>History Record</h1>
     </div>
-    <hr>
+    <div style = "padding-left: 400px">
+        <a href="{{ url('/home')}}">
+            <h6>Back to home</h6>
+        </a>
+    </div>
     <div style="width:1140px;margin-left:auto;margin-right:auto">
         <div style="width:600px;margin-left:auto;margin-right:auto">
             <table class="table">
@@ -38,4 +42,7 @@
         </div>
     </div>
 
+
 @endsection
+
+

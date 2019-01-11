@@ -4,7 +4,11 @@
 <div id="title" style="text-align: center;">
     <h1>Your Result of Test</h1>
 </div>
-
+<div style = "padding-left: 400px">
+<a href="{{ url('/home')}}">
+    <h6>Back to home</h6>
+</a>
+</div>
 <div style="text-align: center;">
 <table class="table table-condensed" style="width:500px;margin-left:auto;margin-right:auto;margin-top:30px;">
     <tr>
