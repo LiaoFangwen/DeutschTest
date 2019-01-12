@@ -24,24 +24,38 @@ class TestController extends Controller
     }
 
     public function showTest(Request $request) {
-        self::$timeStart = Carbon::now()->toDateTimeString();
-        //echo self::$timeStart;
         $testId = $request->id;
         return view('testContent')->with('testId', $testId);
     }
 
     public function showResult(Request $request) {
-        self::$timeEnd = Carbon::now();
         $testId = $request->id;
         $correctAnswers = Question::where('testId', $testId);
         $results = array();
         $score = 0;
         $j = 1;
         foreach ($correctAnswers->cursor() as $correctAnswer) {
-            if($j == 10)
-                $unknownAnswer = $request->get('input0');
+            $unknownAnswer = "";
+            if( $j == 10){
+                $multis10 = $request->get('input0');
+                if($multis10 != null){
+                    $length = count($multis10);
+                    for($toCheck = 0; $toCheck< $length; $toCheck++){
+                        $unknownAnswer = $unknownAnswer.$multis10[$toCheck].",";
+                    }
+                }
+            }
+            elseif( $j == 8 || $j== 9){
+                $multis = $request->get('input'.$j);
+                if($multis != null){
+                    $length = count($multis);
+                    for($toCheck = 0; $toCheck< $length; $toCheck++){
+                        $unknownAnswer = $unknownAnswer.$multis[$toCheck].",";
+                    }
+                }
+            }
             else
-                $unknownAnswer = $request->get('input' . $j);
+                $unknownAnswer = $request->input('input' . $j);
 
             if ($correctAnswer->answer == $unknownAnswer) {
                 $checkAnswer = 'Right';
