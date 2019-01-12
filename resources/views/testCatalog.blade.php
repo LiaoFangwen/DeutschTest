@@ -40,10 +40,5 @@
 
         </div>
     </div>
-        <div style = "padding-left: 400px">
-            <a href="{{ url('/home')}}">
-                <h6>Back to home</h6>
-            </a>
-        </div>
 
 @endsection

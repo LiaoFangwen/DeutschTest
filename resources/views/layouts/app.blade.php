@@ -18,70 +18,86 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .navbar-brand{
+            margin-left: 30px;
+            font-size: 25px;
+            font-weight: 500;
+            color: #23000a;
+        }
+
+        .navbar-brand:hover{
+            color: #23000a;
+        }
+
+        #bannerDiv{
+            height:60px;
+            background-color: white;
+            display: flex;
+            box-shadow: 0px 2px 2px #d6d6d6;
+        }
+
+        #bannerLinks{
+            margin-top:20px;
+            width: 1030px;
+        }
+
+        .bannerLink{
+            text-decoration: none;
+            color: grey;
+            margin-left: 30px;
+            text-align:center;
+        }
+
+        .logoutLink{
+            text-decoration: none;
+            color: #23000a;
+            margin-left:30px;
+            text-align:center;
+        }
+
+        .logoutLink:hover{
+            color:#23000a;
+            text-decoration: none;
+        }
+        .bannerLink:hover{
+            color:black;
+            text-decoration: none;
+        }
+
+    </style>
 
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+        <div id="bannerDiv">
+            <div>
+                <a style="margin-top:5px" class="navbar-brand" href="{{ url('/') }}">
                     {{ config('APP_NAME', 'Deutsch Test') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ url('/home') }}">My Home</a>
-
-                                    <a class="dropdown-item" href="{{ url('/test') }}">Take a Test</a>
-
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-
-
-                                </div>
-
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-
             </div>
-        </nav>
+
+            <div id="bannerLinks">
+                <a class="bannerLink" href="{{ url('/home') }}">Home</a>
+                <a class="bannerLink" href="{{ url('/test') }}">Tests</a>
+                <a class="bannerLink" href="{{ url('/userRecord') }}">Evaluation</a>
+            </div>
+
+            <div style="margin-top:20px;">
+                <a class="logoutLink" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
+        </div>
 
         <main class="py-4">
+
             @yield('content')
         </main>
     </div>
