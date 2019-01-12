@@ -11,6 +11,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(UserSeeder::class);
+        $this->call(TestSeeder::class);
         $this->call(QuestionSeeder::class);
+        $questions = \App\Question::where('type', 'multi');
+        $answerArray = Array();
+        $answerArray[0] = Array('1,','2,','3,','4,');
+        $answerArray[1] = Array('1,2,','1,3,','1,4,','2,3,','2,4,','3,4,');
+        $answerArray[2] = Array('1,2,3,','1,2,4,','1,3,4,', '2,3,4,');
+        $answerArray[3] = Array('1,2,3,4,');
+        foreach ($questions->cursor() as $question) {
+            $answerNumber = rand(1, 4);
+            $randomKey = array_rand($answerArray[$answerNumber-1], 1);
+            $answer = $answerArray[$answerNumber-1][$randomKey];
+            $question->answer = $answer;
+            $question->save();
+        }
+        $this->call(QuestionOptionSeeder::class);
+        $this->call(UserRecordSeeder::class);
     }
 }
