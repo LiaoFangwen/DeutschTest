@@ -9,6 +9,8 @@ use App\UserRecord;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Mews\Purifier\Purifier;
 
 class TestController extends Controller
 {
@@ -35,28 +37,37 @@ class TestController extends Controller
         $score = 0;
         $j = 1;
         foreach ($correctAnswers->cursor() as $correctAnswer) {
+            $answerGetFromTest = null;
             $unknownAnswer = "";
-            if( $j == 10){
-                $multis10 = $request->get('input0');
-                if($multis10 != null){
-                    $length = count($multis10);
-                    for($toCheck = 0; $toCheck< $length; $toCheck++){
-                        $unknownAnswer = $unknownAnswer.$multis10[$toCheck].",";
+            if($j == 10){
+                $answerGetFromTest = $request->get('input0');
+                if(is_array($answerGetFromTest)) {
+                    $length = count($answerGetFromTest);
+                    if($length == 1) {
+                        $unknownAnswer = $answerGetFromTest[0].",";
+                    } else {
+                        for($toCheck = 0; $toCheck< $length; $toCheck++){
+                            $unknownAnswer = $unknownAnswer.$answerGetFromTest[$toCheck].",";
+                        }
                     }
+                } else {
+                    $unknownAnswer = $answerGetFromTest;
+                }
+            } else {
+                $answerGetFromTest = $request->input('input' . $j);
+                if(is_array($answerGetFromTest)) {
+                    $length = count($answerGetFromTest);
+                    if($length == 1) {
+                        $unknownAnswer = $answerGetFromTest[0].",";
+                    } else {
+                        for($toCheck = 0; $toCheck< $length; $toCheck++){
+                            $unknownAnswer = $unknownAnswer.$answerGetFromTest[$toCheck].",";
+                        }
+                    }
+                } else {
+                    $unknownAnswer = $answerGetFromTest;
                 }
             }
-            elseif( $j == 8 || $j== 9){
-                $multis = $request->get('input'.$j);
-                if($multis != null){
-                    $length = count($multis);
-                    for($toCheck = 0; $toCheck< $length; $toCheck++){
-                        $unknownAnswer = $unknownAnswer.$multis[$toCheck].",";
-                    }
-                }
-            }
-            else
-                $unknownAnswer = $request->input('input' . $j);
-
             if ($correctAnswer->answer == $unknownAnswer) {
                 $checkAnswer = 'Right';
                 $score++;
@@ -96,5 +107,14 @@ class TestController extends Controller
         $test->peopleCounting = $peopleCounting;
         $test->save();
     }
+    private function multiTestDB() {
+        $updateQuestions = Question::where('type', 'multi');
+        foreach ($updateQuestions->cursor() as $q) {
+            $answers = Array('');
+            $answerNumber = rand(1, 4);
+            for($i = 0; $i<$answerNumber; $i++) {
 
+            }
+        }
+    }
 }
