@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div id="title" style="text-align: center;">
-    <h1>{{ 'Test'.$testId }}</h1>
-</div>
-<hr>
-<div id="content" style="text-align: center;">
-    Time：<span id="timer"></span>
+    <div style="width:100%;height:50px;position:fixed;background-color:#f8fafc;">
+        <div style="width: 100% ;position: relative">
+        <div id="title" style="text-align: center;">
+            <h1>{{ 'Test'.$testId }}</h1>
+        </div>
+        <div id="timeDiv">Time：<span id="timer">20 : 00</span></div>
+        </div>
+    </div>
 
+
+    <div id="content" style="text-align: center;margin-top:70px;">
     <form action="{{url('/test/testResult/'.$testId)}}" method="post">
         {!! csrf_field() !!}
             <table class="table table-striped" style="width:700px;margin-left:auto;margin-right:auto;text-align:left">
@@ -52,9 +56,24 @@
         <br/>
         <input type="submit" class="btn btn-default" value="Show Result">
     </form>
-</div>
+    </div>
 @endsection
 
+<style>
+    #title{
+        position:absolute;
+        height:100%;
+        width:100%;
+        margin-top:5px;
+    }
+    #timeDiv{
+        margin-right:5px;
+        margin-top:15px;
+        width: 95%;
+        position:absolute;
+        text-align:right;
+    }
+</style>
 <script>
     var clock=new clock();
     var timer;
@@ -65,14 +84,14 @@
     }
     function clock(){
         // s: whole needed seconds
-        this.s=10;
+        this.s=1199;
         this.move=function(){
             document.getElementById("timer").innerHTML=exchange(this.s);
             this.s=this.s-1;
 
             // if time is out, then stopping calling move()
             if(this.s<0){
-                alert("Time is out");
+                alert("Time is out, you can still answer.");
                 clearTimeout(timer);
             }
         }

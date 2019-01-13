@@ -26,8 +26,8 @@ class HomeController extends Controller
             $records = UserRecord::where(['userId' => $user->id, 'testId' => $i]);
             $number = 0;
             foreach($records->cursor() as $record){
-                $totalScore = $totalScore + $record->score;
-                $number ++;
+                    $totalScore = $totalScore + $record->score;
+                    $number ++;
             }
             $ts = Test::find($i);
             $averageScore = round($totalScore/$number,2);

@@ -26,9 +26,9 @@ class UserRecordController extends Controller
         for($i=1;$i<=10;$i++) {
             $totalScore=0;
             $records = UserRecord::where(['userId' => $user->id, 'testId' => $i])->orderBy('updated_at', 'DESC');
-            $number = 1;
+            $number = 0;
             foreach($records->cursor() as $record){
-                if($number<=5){
+                if($number<5){
                     $totalScore = $totalScore + $record->score;
                     $number ++;
                     array_push($recordsList,['testId'=>$i,'attemptNumber'=>$record->attemptNumber,'score'=>$record->score]);
