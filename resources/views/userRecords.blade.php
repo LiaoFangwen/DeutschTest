@@ -1,12 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <div style="width:700px; height: 900px;">
-        <canvas id="myChart"></canvas>
-    </div>
-
-    <div id="title" style="text-align: center;">
+    <div id="title" style="text-align: center; margin-top:20px;">
         <h1>History Record</h1>
     </div>
     <div style = "padding-left: 400px">

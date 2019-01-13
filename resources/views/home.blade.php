@@ -1,52 +1,49 @@
 @extends('layouts.app')
 
 @section('content')
-<div style="margin-top:20px;"class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Hi, {{ Auth::user()->name }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <ul>
-                        <li><a href="{{ url('/test') }}">Take a test</a></li>
-                        <li><a href="{{ url('/userRecord') }}">History Record</a></li>
-                        <li>{{$averageScores[0]['testAverageScore']}}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div id="title" style="text-align: center; margin-top:20px;">
+        <h1>Evaluation Chart</h1>
     </div>
-</div>
 
-<div style="width:700px; height: 900px; margin-left: auto; margin-right: auto;">
+<div style="width:700px; height: 450px;margin-left: auto; margin-right: auto;">
+
     <canvas id="myChart"></canvas>
     @for($i=0;$i<count($averageScores);$i++)
-        <input type="hidden" id="y{{$i}}" value="{{$averageScores[$i]['userAverageScore']}}">{{$averageScores[$i]['userAverageScore']}}</input>
-        <input type="hidden" id="t{{$i}}" value="{{$averageScores[$i]['testAverageScore']}}">{{$averageScores[$i]['testAverageScore']}}</input>
+        <input type="hidden" id="y{{$i}}" value="{{$averageScores[$i]['userAverageScore']}}"/>
+        <input type="hidden" id="t{{$i}}" value="{{$averageScores[$i]['testAverageScore']}}"/>
     @endfor
 </div>
+
+<div id="historyDiv">
+    <a id="history" href="{{url('/userRecord')}}"> >>History Record</a>
+</div>
 @endsection
+<style>
+    #historyDiv{
+        margin-top:-20px;
+        width:180px;
+        height:10px;
+        margin-right:auto;
+        margin-left:auto;
+    }
+    #history{
+        text-decoration:none;
+    }
+</style>
 
 <script type="text/javascript" src="{{ URL::asset('js/Chart.js-2.7.3/dist/Chart.js') }}"></script>
 <script>
     window.onload = function(){
-        var x1 = "test1";
-        var x2 = "text2";
-        var x3 = "test3";
-        var x4 = "test4";
-        var x5 = "test5";
-        var x6 = "test6";
-        var x7 = "test7";
-        var x8 = "test8";
-        var x9 = "test9";
-        var x10 = "test10";
+        var x1 = "Test1";
+        var x2 = "Test2";
+        var x3 = "Test3";
+        var x4 = "Test4";
+        var x5 = "Test5";
+        var x6 = "Test6";
+        var x7 = "Test7";
+        var x8 = "Test8";
+        var x9 = "Test9";
+        var x10 = "Test10";
 
         var y0 = document.getElementById("y0").value;
         var y1 = document.getElementById("y1").value;

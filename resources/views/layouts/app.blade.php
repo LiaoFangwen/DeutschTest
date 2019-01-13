@@ -81,9 +81,8 @@
             </div>
 
             <div id="bannerLinks">
-                <a class="bannerLink" href="{{ url('/home') }}">Home</a>
                 <a class="bannerLink" href="{{ url('/test') }}">Tests</a>
-                <a class="bannerLink" href="{{ url('/userRecord') }}">Evaluation</a>
+                <a class="bannerLink" href="{{ url('/home') }}">Evaluation</a>
                 <a class="bannerLink" href="{{ url('/admin') }}">Admin Mode</a>
             </div>
 
