@@ -13,9 +13,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        You have to log in as a administrator!
                     </div>
-
                     <div style="margin-left: auto;margin-right:auto">
                         <a href="{{ url('admin/adminEditTest') }}">Edit Tests</a>
                     </div>
