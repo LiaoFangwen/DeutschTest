@@ -32,9 +32,12 @@
 
         #bannerDiv{
             height:60px;
+            width:100%;
             background-color: white;
             display: flex;
             box-shadow: 0px 2px 2px #d6d6d6;
+            position: fixed;
+            top:0px;
         }
 
         #bannerLinks{
@@ -81,6 +84,7 @@
                 <a class="bannerLink" href="{{ url('/home') }}">Home</a>
                 <a class="bannerLink" href="{{ url('/test') }}">Tests</a>
                 <a class="bannerLink" href="{{ url('/userRecord') }}">Evaluation</a>
+                <a class="bannerLink" href="{{ url('/admin') }}">Admin Mode</a>
             </div>
 
             <div style="margin-top:20px;">
@@ -96,8 +100,7 @@
             </div>
         </div>
 
-        <main class="py-4">
-
+        <main class="py-4" style="margin-top:38px;">
             @yield('content')
         </main>
     </div>

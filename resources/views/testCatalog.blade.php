@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="title" style="text-align: center;">
+    <div id="title" style="text-align: center;margin-top:20px;">
         <h1>Take a Test</h1>
     </div>
 

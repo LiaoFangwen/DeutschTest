@@ -2,7 +2,7 @@
 
 @section('content')
     <div id="title" style="text-align: center;">
-        <h1>Take a Test</h1>
+        <h1>List of Tests</h1>
     </div>
 
     <hr>
