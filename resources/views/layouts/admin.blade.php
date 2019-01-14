@@ -1,3 +1,4 @@
+<!-- banner for admin mode-->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -78,6 +79,7 @@
     <main class="py-4">
         @yield('content')
     </main>
+
 </div>
 </body>
 </html>

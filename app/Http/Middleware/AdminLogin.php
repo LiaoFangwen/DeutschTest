@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminLogin
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request. if not logged in redirect to admin log in
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

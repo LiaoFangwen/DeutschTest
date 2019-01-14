@@ -11,17 +11,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert([
-            'name' => 'Admin0',
-            'email' => 'Admin0@th.de',
-            'password' => bcrypt('12345678'),
-        ]);
-        DB::table('admins')->insert([
-            'name' => 'Admin1',
-            'email' => 'Admin1@th.de',
-            'password' => bcrypt('12345678'),
-        ]);
-        /*
         $this->call(UserSeeder::class);
         $this->call(TestSeeder::class);
         $this->call(QuestionSeeder::class);
@@ -40,6 +29,16 @@ class DatabaseSeeder extends Seeder
         }
         $this->call(QuestionOptionSeeder::class);
         $this->call(UserRecordSeeder::class);
-        */
+        DB::table('admins')->insert([
+            'name' => 'Admin0',
+            'email' => 'Admin0@th.de',
+            'password' => bcrypt('12345678'),
+        ]);
+        DB::table('admins')->insert([
+            'name' => 'Admin1',
+            'email' => 'Admin1@th.de',
+            'password' => bcrypt('12345678'),
+        ]);
+
     }
 }

@@ -1,3 +1,4 @@
+<!-- banner for user mode-->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -74,25 +75,27 @@
 <body>
     <div id="app">
         <div id="bannerDiv">
+            <!-- title -->
             <div>
                 <a style="margin-top:5px" class="navbar-brand" href="{{ url('/') }}">
                     {{ config('APP_NAME', 'Deutsch Test') }}
                 </a>
             </div>
 
+            <!-- guide links -->
             <div id="bannerLinks">
                 <a class="bannerLink" href="{{ url('/test') }}">Tests</a>
                 <a class="bannerLink" href="{{ url('/home') }}">Evaluation</a>
                 <a class="bannerLink" href="{{ url('/admin') }}">Admin Mode</a>
             </div>
 
+            <!-- logout -->
             <div style="margin-top:20px;">
                 <a class="logoutLink" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                     Logout
                 </a>
-
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
@@ -102,6 +105,17 @@
         <main class="py-4" style="margin-top:38px;">
             @yield('content')
         </main>
+    </div>
+
+    <div>
+        <!-- Footer /  copyright declaration-->
+        <footer class="footer">
+            <div style="text-align:center;font-size:12px;">
+                <p>
+                    <strong>© 2019 Copyright: Fangwen Liao | Xinyue Shi | Yun Hua </strong>
+                </p>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

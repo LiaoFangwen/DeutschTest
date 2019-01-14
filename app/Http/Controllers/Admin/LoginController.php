@@ -11,6 +11,11 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
+    /**
+     * Where to redirect users after login.
+     *
+     * @var string
+     */
     protected $redirectTo = '/admin/adminFunction';
 
     public function __construct()
@@ -23,6 +28,10 @@ class LoginController extends Controller
         return view('admin.login');
     }
 
+    /**
+     * return the 'admin' guard
+     * @return mixed
+     */
     protected function guard()
     {
         return Auth::guard('admin');

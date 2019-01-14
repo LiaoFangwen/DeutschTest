@@ -1,3 +1,5 @@
+<!-- connected to userRecordController@showRecord -->
+<!-- show history record of users -->
 @extends('layouts.app')
 
 @section('content')
@@ -9,6 +11,12 @@
     </div>
     <div style="width:1140px;margin-left:auto;margin-right:auto">
         <div style="width:600px;margin-left:auto;margin-right:auto">
+            <!-- records table-->
+            <!-- first row: Test ID-->
+            <!-- second row: attempt times-->
+            <!-- third row: score of every attempt-->
+            <!-- fourth row: average score of these attempts-->
+            <!-- fifth row: average score of every test-->
             <table class="table">
                 <tr>
                     <th>Test Name</th>
@@ -18,6 +26,7 @@
                     <th>Average Score of Test</th>
                 </tr>
                 @for($i=0;$i<count($recordsList);$i++)
+                    <!-- only show latest 5 attempt times of every test-->
                     @if($i%5==0)
                         <tr>
                             <td>{{'Test'.$recordsList[$i]['testId']}}</td>
@@ -37,8 +46,6 @@
             </table>
         </div>
     </div>
-
-
 
 @endsection
 

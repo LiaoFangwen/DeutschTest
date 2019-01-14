@@ -17,6 +17,11 @@ class HomeController extends Controller
             return $next($request);
         });
     }
+
+    /**
+     * show the chart of user evaluation
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showChart()
     {
         $user = $this->user;

@@ -1,3 +1,4 @@
+<!-- welcome page -->
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -73,19 +74,22 @@
 <body>
 <div class="flex-center position-ref full-height">
     <div class="content">
+        <!-- title / logo -->
         <div class="title">
             <a href="{{ url('test/') }}">{{ config('APP_NAME', 'Deutsch Test') }}</a>
         </div>
 
+        <!-- main idea -->
         <div id="slogan" style="letter-spacing: 8px; margin-top:-8px; margin-bottom:150px;">
             Learing Deutsch and building a better future.
         </div>
 
+        <!-- guide links -->
         @if (Route::has('login'))
             <div class="top-right links">
                 @auth
                     <a href="{{ url('/test') }}">Take a Test</a>
-                    | <a href="{{ url('userRecord') }}">Evaluation</a>
+                    | <a href="{{ url('home') }}">Evaluation</a>
                     | <a href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                document.getElementById('logout-form').submit();">
