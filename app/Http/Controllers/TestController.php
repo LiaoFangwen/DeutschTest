@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TestResultPost;
 use App\Question;
 use App\Test;
 use App\User;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Mews\Purifier\Purifier;
+use Validator;
 
 class TestController extends Controller
 {
@@ -32,6 +34,45 @@ class TestController extends Controller
 
     public function showResult(Request $request) {
         $testId = $request->id;
+
+        //validation with laravel validator
+        $messages = [
+            'input0.required' => 'question 10',
+            'input1.required' => 'question 1',
+            'input2.required' => 'question 2',
+            'input3.required' => 'question 3',
+            'input4.required' => 'question 4',
+            'input5.required' => 'question 5',
+            'input6.required' => 'question 6',
+            'input7.required' => 'question 7',
+            'input8.required' => 'question 8',
+            'input9.required' => 'question 9',
+
+        ];
+        $validator = Validator::make($request->all(), [
+            'input0' => 'required',
+            'input1' => 'required',
+            'input2' => 'required',
+            'input3' => 'required',
+            'input4' => 'required',
+            'input5' => 'required',
+            'input6' => 'required',
+            'input7' => 'required',
+            'input8' => 'required',
+            'input9' => 'required',
+        ], $messages);
+        if ($validator->fails()) {
+            return redirect('test/'.$testId)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        //user purifier to clean the input data in order to stop XSS!!!
+        for($toClean = 0; $toClean< 10; $toClean ++){
+            Purifier::clean($request->input('input' . $toClean),);
+        }
+
+        //if is valid:
         $correctAnswers = Question::where('testId', $testId);
         $results = array();
         $score = 0;
