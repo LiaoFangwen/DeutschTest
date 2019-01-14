@@ -1,9 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+    <div style="margin-left:auto; margin-right:auto;">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                <li>Please answer:</li>
+                @foreach ($errors->all() as $error)
+                    {{ $error }}
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    </div>
+
     <div style="width:100%;height:50px;position:fixed;background-color:#f8fafc;">
         <div style="width: 100% ;position: relative">
         <div id="title" style="text-align: center;">
+
             <h1>{{ 'Test'.$testId }}</h1>
         </div>
         <div id="timeDiv">Time：<span id="timer">20 : 00</span></div>
@@ -16,12 +30,13 @@
         {!! csrf_field() !!}
             <table class="table table-striped" style="width:700px;margin-left:auto;margin-right:auto;text-align:left">
                 @foreach (\App\Question::where('testId', $testId)->cursor() as $question)
+                    {{--choose one correct answer --}}
                     @if($question->type == "single")
                     <tr><td colspan="4" ><h4>{{$question->questionContent}}</h4></td></tr>
                     <tr>
                         @foreach (\App\QuestionOption::where('questionId', $question->id)->cursor() as $questionOption)
-                        <td><input class="uncorrectedAnswer" type="radio" name="input{{($question->id)%10}}"
-                               value="{{$questionOption->optionContent}}">{{$questionOption->optionContent}}
+                        <td><input class="uncorrectedAnswer" type="radio" name="input{{($question->id)%10}}" value="{{$questionOption->optionContent}}"
+                            <?php if($questionOption->optionContent == old('input'.($question->id)%10)){ echo 'checked';}?>>{{$questionOption->optionContent}}
                         </td>
                         @endforeach
                     </tr>
@@ -30,9 +45,10 @@
             </table>
             <table class="table table-striped" style="width:700px;margin-left:auto;margin-right:auto;text-align:left">
                 @foreach(\App\Question::where('testId', $testId)->cursor() as $question)
+                    {{-- filling the blanks --}}
                      @if($question->type == "blank")
                         <tr><td colspan="4" ><h4>{{$question->questionContent}}</h4></td></tr>
-                        <td><input class="uncorrectedAnswer" type="text" name="input{{($question->id)%10}}">
+                        <td><input class="uncorrectedAnswer" type="text" name="input{{($question->id)%10}}" maxlength="40" value="{{old('input'.($question->id)%10)}}">
                         </td>
                         </tr>
                      @endif
@@ -41,13 +57,17 @@
         </table>
         <table class="table table-striped" style="width:700px;margin-left:auto;margin-right:auto;text-align:left">
             @foreach(\App\Question::where('testId', $testId)->cursor() as $question)
+                {{-- multiple choices --}}
                 @if($question->type == "multi")
                     <tr><td colspan="4" ><h4>{{$question->questionContent}}</h4></td></tr>
                     <tr>
                         @foreach (\App\QuestionOption::where('questionId', $question->id)->cursor() as $questionOption)
                             <td><input class="uncorrectedAnswer" type="checkbox" name="input{{($question->id)%10}}[]"
-                                       value="{{$questionOption->optionContent}}">{{$questionOption->optionContent}}
+                                 value="{{$questionOption->optionContent}}" >{{$questionOption->optionContent}}
+<!--                                --><?php //if($questionOption->optionContent == old('input'.($question->id)%10))
+//                                        { echo 'checked';}?>
                             </td>
+                            {{--<script>window.alert({{old('input'.($question->id)%10)}})</script>--}}
                         @endforeach
                     </tr>
                 @endif
