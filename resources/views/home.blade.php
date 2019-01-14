@@ -1,3 +1,5 @@
+<!-- connected to homeController@showChart -->
+<!-- show evaluation chart and link to history record-->
 @extends('layouts.app')
 
 @section('content')
@@ -7,8 +9,11 @@
 
 <div style="width:700px; height: 450px;margin-left: auto; margin-right: auto;">
 
+    <!-- evaluation chart -->
+    <!-- show average score of user to all users -->
     <canvas id="myChart"></canvas>
     @for($i=0;$i<count($averageScores);$i++)
+        <!-- save data -->
         <input type="hidden" id="y{{$i}}" value="{{$averageScores[$i]['userAverageScore']}}"/>
         <input type="hidden" id="t{{$i}}" value="{{$averageScores[$i]['testAverageScore']}}"/>
     @endfor
@@ -18,6 +23,8 @@
     <a id="history" href="{{url('/userRecord')}}"> >>History Record</a>
 </div>
 @endsection
+
+<!-- style -->
 <style>
     #historyDiv{
         margin-top:-20px;
@@ -31,6 +38,7 @@
     }
 </style>
 
+<!-- script -->
 <script type="text/javascript" src="{{ URL::asset('js/Chart.js-2.7.3/dist/Chart.js') }}"></script>
 <script>
     window.onload = function(){
