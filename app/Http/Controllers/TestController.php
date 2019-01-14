@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Mews\Purifier\Purifier;
 use Validator;
-
 class TestController extends Controller
 {
     private $averageScore;
@@ -49,7 +48,6 @@ class TestController extends Controller
      */
     public function showResult(Request $request) {
         $testId = $request->id;
-
         //validation with laravel validator
         $messages = [
             'input0.required' => 'question 10',
@@ -84,15 +82,18 @@ class TestController extends Controller
 
         //user purifier to clean the input data in order to stop XSS!!!
         for($toClean = 0; $toClean< 10; $toClean ++){
-            Purifier::clean($request->input('input' . $toClean));
+
+
         }
 
         //if is valid, calculate the score
         $correctAnswers = Question::where('testId', $testId);
+        $types = array();
         $results = array();
         $score = 0;
         $j = 1;
         foreach ($correctAnswers->cursor() as $correctAnswer) {
+            $types[$j-1] = $correctAnswer->type;
             $answerGetFromTest = null;
             $unknownAnswer = "";
             if($j == 10){
@@ -109,7 +110,7 @@ class TestController extends Controller
                         }
                     }
                 } else {
-                    $unknownAnswer = $answerGetFromTest;
+                    $unknownAnswer = strip_tags(clean($answerGetFromTest));
                 }
             } else {
                 $answerGetFromTest = $request->input('input' . $j);
@@ -123,7 +124,7 @@ class TestController extends Controller
                         }
                     }
                 } else {
-                    $unknownAnswer = $answerGetFromTest;
+                    $unknownAnswer = strip_tags(clean($answerGetFromTest));
                 }
             }
             if ($correctAnswer->answer == $unknownAnswer) {
@@ -141,7 +142,7 @@ class TestController extends Controller
         $this->createUserRecord($score,$testId);
         //update the average test score into database
         $this->updateTest($testId);
-        return view('testResult',['results'=>$results,'score'=>$score]);
+        return view('testResult',['results'=>$results,'score'=>$score, 'types' => $types]);
 
     }
 
