@@ -69,7 +69,7 @@ class TestController extends Controller
 
         //user purifier to clean the input data in order to stop XSS!!!
         for($toClean = 0; $toClean< 10; $toClean ++){
-            Purifier::clean($request->input('input' . $toClean),);
+            Purifier::clean($request->input('input' . $toClean));
         }
 
         //if is valid:

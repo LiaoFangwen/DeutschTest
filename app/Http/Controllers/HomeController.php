@@ -30,7 +30,12 @@ class HomeController extends Controller
                     $number ++;
             }
             $ts = Test::find($i);
-            $averageScore = round($totalScore/$number,2);
+            if($number !=0){
+                $averageScore = round($totalScore/$number,2);
+            }
+            else{
+                $averageScore = 0;
+            }
             array_push($averageScores,['testId'=>$i,
                 'userAverageScore'=>$averageScore,'testAverageScore'=>round($ts->averageScore,2)]);
         }
