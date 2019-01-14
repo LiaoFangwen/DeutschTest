@@ -19,19 +19,34 @@ class TestController extends Controller
     private $averageScore;
     public function __construct()
     {
+        //if the user is not logged in, redirect to log in.
         $this->middleware('auth');
     }
 
+    /**
+     * show the test catalog page
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         return view('testCatalog')->with('tests', \App\Test::all());
     }
 
+    /**
+     * show the specific content of the test where user can do the test
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showTest(Request $request) {
         $testId = $request->id;
         return view('testContent')->with('testId', $testId);
     }
 
+    /**
+     * after user post the test, calculate the score of this test, and show the result in test result page
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function showResult(Request $request) {
         $testId = $request->id;
 
@@ -69,10 +84,10 @@ class TestController extends Controller
 
         //user purifier to clean the input data in order to stop XSS!!!
         for($toClean = 0; $toClean< 10; $toClean ++){
-            Purifier::clean($request->input('input' . $toClean),);
+            Purifier::clean($request->input('input' . $toClean));
         }
 
-        //if is valid:
+        //if is valid, calculate the score
         $correctAnswers = Question::where('testId', $testId);
         $results = array();
         $score = 0;
@@ -82,11 +97,13 @@ class TestController extends Controller
             $unknownAnswer = "";
             if($j == 10){
                 $answerGetFromTest = $request->get('input0');
+                //if it is a multi choice, then the input is an array
                 if(is_array($answerGetFromTest)) {
                     $length = count($answerGetFromTest);
                     if($length == 1) {
                         $unknownAnswer = $answerGetFromTest[0].",";
                     } else {
+                        //connect all checked answers into one string
                         for($toCheck = 0; $toCheck< $length; $toCheck++){
                             $unknownAnswer = $unknownAnswer.$answerGetFromTest[$toCheck].",";
                         }
@@ -115,16 +132,24 @@ class TestController extends Controller
             } else {
                 $checkAnswer = 'Wrong';
             }
+            //put the result into results array
             $result = array($j,$unknownAnswer,$correctAnswer->answer,$checkAnswer);
             array_push($results,$result);
             $j++;
         }
-
+        //add a new user record in database
         $this->createUserRecord($score,$testId);
+        //update the average test score into database
         $this->updateTest($testId);
         return view('testResult',['results'=>$results,'score'=>$score]);
 
     }
+
+    /**
+     * create a new user test record in the database after the score is calculated
+     * @param $score user score of the test
+     * @param $testId test id
+     */
     private function createUserRecord($score, $testId) {
         $user = Auth::user();
         $attemptNumber = UserRecord::where(['userId' => $user->id, 'testId' => $testId])->max('attemptNumber');
@@ -135,6 +160,11 @@ class TestController extends Controller
         $userRecord->testId = $testId;
         $userRecord->save();
     }
+
+    /**
+     * after a new user test record created, recalculated the average score of the test and update it in database
+     * @param $testId test id
+     */
     private function updateTest($testId) {
         $records = UserRecord::where(['testId' => $testId]);
         $peopleCounting = $records->count();
@@ -147,15 +177,5 @@ class TestController extends Controller
         $test->averageScore = $averageScore;
         $test->peopleCounting = $peopleCounting;
         $test->save();
-    }
-    private function multiTestDB() {
-        $updateQuestions = Question::where('type', 'multi');
-        foreach ($updateQuestions->cursor() as $q) {
-            $answers = Array('');
-            $answerNumber = rand(1, 4);
-            for($i = 0; $i<$answerNumber; $i++) {
-
-            }
-        }
     }
 }
