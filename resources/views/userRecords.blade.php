@@ -45,8 +45,27 @@
                 @endfor
             </table>
         </div>
+
+        <div id="EvaDiv">
+            <a id="evaluation" href="{{url('/home')}}"> >>Back to Evaluation</a>
+        </div>
     </div>
 
 @endsection
 
+<!-- style -->
+<style>
+    #EvaDiv{
+        margin-top:30px;
+        width:200px;
+        height:10px;
+        margin-right:auto;
+        margin-left:auto;
+    }
+    #evaluation{
+        text-decoration:none;
+        font-size: 18px;
+
+    }
+</style>
 
