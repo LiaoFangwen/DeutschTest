@@ -9,7 +9,11 @@
         <div id="title" style="text-align: center;">
             <h1>{{ 'Test'.$testId }}</h1>
         </div>
-        <div id="timeDiv">Time：<span id="timer">20 : 00</span></div>
+            <div id="timeDiv">Time：<span id="timer">
+                    <?php if(!$errors->any())
+                            {echo "20 : 00";}
+                    ?>
+                </span></div>
         </div>
 
     </div>
@@ -72,8 +76,11 @@
                     @endif
                 @endforeach
             </table>
-        <br/>
+        <br/><br/>
+        <input type="hidden" id="timeHidden" value=""/>
+        <input type="reset" class="btn btn-default" onclick="window.location.href='{{url('/test')}}'" value="Cancel">
         <input type="submit" class="btn btn-default" value="Show Result">
+
     </form>
     </div>
 @endsection
@@ -106,6 +113,11 @@
         font-size:18px;
         color:rgba(142, 2, 7, 0.88);
     }
+
+    .btn{
+        margin-left: 50px;
+        margin-right: 50px;
+    }
 </style>
 
 <!-- script -->
@@ -119,21 +131,44 @@
 
     function clock(){
         // s: whole needed seconds
-        this.s=1199;
+
+        if(window.name=="" && document.getElementById("timer").innerHTML == "")
+            {this.s=1199;}
+        else
+            {this.s=window.name}
+        
         this.move=function(){
             document.getElementById("timer").innerHTML=exchange(this.s);
             this.s=this.s-1;
+            window.name=this.s;
 
             // if time is out, then stopping calling move()
             if(this.s<0){
                 alert("Time is out, you can still answer.");
                 clearTimeout(timer);
+                document.getElementById("timeHidden").value="00 : 00";
             }
         }
     }
 
     //change seconds to minutes
     function exchange(time){
+        this.m=Math.floor(time/60);
+        this.s=(time%60);
+        if(this.s>=10)
+            if(this.m>=10)
+                this.text=this.m+" : "+this.s;
+            else
+                this.text="0"+this.m+" : "+this.s;
+        else
+        if(this.m>=10)
+            this.text=this.m+" : 0"+this.s;
+        else
+            this.text="0"+this.m+" : 0"+this.s;
+        return this.text;
+    }
+
+    function reExchange(second){
         this.m=Math.floor(time/60);
         this.s=(time%60);
         if(this.s>=10)

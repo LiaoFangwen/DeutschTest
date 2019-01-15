@@ -35,6 +35,8 @@
     }
     #history{
         text-decoration:none;
+        font-size: 20px;
+
     }
 </style>
 

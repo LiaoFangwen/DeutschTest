@@ -88,7 +88,7 @@
         @if (Route::has('login'))
             <div class="top-right links">
                 @auth
-                    <a href="{{ url('/test') }}">Take a Test</a>
+                    <a href="{{ url('/test') }}">Tests</a>
                     | <a href="{{ url('home') }}">Evaluation</a>
                     | <a href="{{ route('logout') }}"
                          onclick="event.preventDefault();

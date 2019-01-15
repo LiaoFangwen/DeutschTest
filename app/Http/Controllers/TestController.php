@@ -134,7 +134,7 @@ class TestController extends Controller
                 $checkAnswer = 'Wrong';
             }
             //put the result into results array
-            $result = array($j,$unknownAnswer,$correctAnswer->answer,$checkAnswer);
+            $result = array($j,$unknownAnswer,$correctAnswer->answer,$checkAnswer,$correctAnswer->type);
             array_push($results,$result);
             $j++;
         }
@@ -142,7 +142,7 @@ class TestController extends Controller
         $this->createUserRecord($score,$testId);
         //update the average test score into database
         $this->updateTest($testId);
-        return view('testResult',['results'=>$results,'score'=>$score, 'types' => $types]);
+        return view('testResult',['results'=>$results,'score'=>$score]);
 
     }
 
