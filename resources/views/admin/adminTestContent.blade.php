@@ -37,7 +37,7 @@
                 @endforeach
             </table>
             <div style="width:100%;text-align:center;">
-            <input type="submit" class="btn btn-default" value="Next">
+            <input type="submit" class="btn btn-default" value="Save">
             </div>
         </form>
     </div>

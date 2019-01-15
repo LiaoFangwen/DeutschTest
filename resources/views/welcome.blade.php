@@ -90,7 +90,6 @@
                 @auth
                     <a href="{{ url('/test') }}">Tests</a>
                     | <a href="{{ url('home') }}">Evaluation</a>
-                    | <a href="{{ url('/admin') }}">Admin Mode</a>
                     | <a href="{{ route('logout') }}"
                          onclick="event.preventDefault();
                                document.getElementById('logout-form').submit();">

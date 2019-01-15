@@ -16,7 +16,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin/adminFunction';
+    protected $redirectTo = '/admin';
 
     public function __construct()
     {
