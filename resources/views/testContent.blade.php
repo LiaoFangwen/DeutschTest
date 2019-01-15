@@ -14,6 +14,12 @@
                             {echo "20 : 00";}
                     ?>
                 </span></div>
+            <input type="hidden" id="errorTime"
+                <?php if(!$errors->any())
+                        {echo "value='noError'";}
+                        else
+                        {echo "value=''";}
+                ?>/>
         </div>
 
     </div>
@@ -130,13 +136,13 @@
     }
 
     function clock(){
+        var error = '<?php echo $errors->any(); ?>';
         // s: whole needed seconds
-
-        if(window.name=="" && document.getElementById("timer").innerHTML == "")
+        if(window.name==null || error=="")
             {this.s=1199;}
         else
             {this.s=window.name}
-        
+
         this.move=function(){
             document.getElementById("timer").innerHTML=exchange(this.s);
             this.s=this.s-1;

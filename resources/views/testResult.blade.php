@@ -34,12 +34,36 @@
             </tr>
         @endfor
     </table>
+
     <br/>
 
     <!-- test score-->
     <div style="width:440px;margin-left: auto;margin-right: auto;text-align: center">
         <h5>Your score: {{$score}}</h5>
     </div>
+
+
+    <div style="width:400px;margin-left:auto;margin-right:auto;margin-top:40px;">
+        <table>
+            <tr><td class="linkTd" style="text-align:left;">
+                    <a class="link" href="{{url('/home')}}"> Go to Evaluation</a>
+                </td><td class="linkTd" style="text-align:right;">
+                    <a class="link" href="{{url('/test')}}"> Take A Test</a>
+                </td></tr>
+        </table>
+    </div>
 </div>
 <br/><br/>
 @endsection
+
+<!-- style -->
+<style>
+    .linkTd{
+        width:200px;
+        height:10px;
+    }
+    .link{
+        text-decoration:none;
+        font-size: 20px;
+    }
+</style>
