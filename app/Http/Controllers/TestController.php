@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Mews\Purifier\Purifier;
+use Spatie\Sitemap\SitemapGenerator;
 use Validator;
 class TestController extends Controller
 {
@@ -28,6 +29,7 @@ class TestController extends Controller
      */
     public function index()
     {
+        //SitemapGenerator::create('http://localhost:4433/DeutschTest/public/')->writeToFile(public_path("sitemap.xml"));
         return view('testCatalog')->with('tests', \App\Test::all());
     }
 
