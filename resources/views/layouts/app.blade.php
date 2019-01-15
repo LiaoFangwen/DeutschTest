@@ -53,15 +53,14 @@
             text-align:center;
         }
 
-        .logoutLink{
+        .logLink{
             text-decoration: none;
-            color: #23000a;
-            margin-left:30px;
+            color: grey;
             text-align:center;
         }
 
-        .logoutLink:hover{
-            color:#23000a;
+        .logLink:hover{
+            color:black;
             text-decoration: none;
         }
         .bannerLink:hover{
@@ -89,9 +88,11 @@
                 <a class="bannerLink" href="{{ url('/admin') }}">Admin Mode</a>
             </div>
 
-            <!-- logout -->
+
+            <!-- logout / Login & Register-->
             <div style="margin-top:20px;">
-                <a class="logoutLink" href="{{ route('logout') }}"
+                @auth
+                <a class="logLink" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                     Logout
@@ -99,6 +100,14 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
+
+                @else
+                    <a class="logLink" href="{{ route('login') }}">Login</a>
+
+                    @if (Route::has('register'))
+                        | <a class="logLink" href="{{ route('register') }}">Register</a>
+                    @endif
+                @endauth
             </div>
         </div>
 

@@ -48,7 +48,7 @@
             <tr><td class="linkTd" style="text-align:left;">
                     <a class="link" href="{{url('/home')}}"> Go to Evaluation</a>
                 </td><td class="linkTd" style="text-align:right;">
-                    <a class="link" href="{{url('/test')}}"> Take A Test</a>
+                    <a class="link" href="{{url('/test')}}"> Take a Test</a>
                 </td></tr>
         </table>
     </div>

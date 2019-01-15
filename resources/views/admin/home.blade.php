@@ -14,7 +14,7 @@
                             </div>
                         @endif
                     </div>
-                    <div style="margin-left: auto;margin-right:auto">
+                    <div style="margin-left: auto;margin-right:auto;height:50px;">
                         <a href="{{ url('admin/adminEditTest') }}">Edit Tests</a>
                     </div>
                 </div>
